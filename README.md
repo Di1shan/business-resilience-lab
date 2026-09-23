@@ -43,9 +43,19 @@ business-resilience-lab/
 
 ## Current Status
 
-**Milestone M0 – Environment Setup**
+### Milestone M0 – Environment Setup
 
-Initial repository created. VMware lab setup and environment verification will be documented before development begins.
+Completed the initial isolated lab environment using VMware Fusion on macOS.
+
+- Windows 11 ARM64 VM configured with Python
+- Kali Linux ARM64 VM configured with Python and Wireshark
+- Both VMs connected through a private VMware network
+- Windows-to-Kali communication successfully tested
+- External network isolation verified
+- Clean VMware recovery snapshot created for the project
+- Lab environment ready for development and testing
+
+**Status:** Completed
 
 ## Safety and Scope
 
