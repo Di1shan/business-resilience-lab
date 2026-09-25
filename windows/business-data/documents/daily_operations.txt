@@ -1,0 +1,16 @@
+LAB DATA ONLY
+
+Fictional Business Daily Operations
+
+The business maintains customer and invoice records for training purposes.
+
+Daily activities include:
+- Reviewing customer information
+- Checking invoice records
+- Identifying unpaid invoices
+- Updating invoice payment status
+- Generating daily operational reports
+
+All data in this project is fictional and used only inside the isolated cybersecurity lab.
+
+notepad business-data\documents\daily_operations.txt
