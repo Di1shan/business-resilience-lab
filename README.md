@@ -72,6 +72,23 @@ Created the initial fictional business dataset on the Windows lab VM.
 
 **Status:** Completed
 
+### Milestone M2 – Business Application
+
+Built the fictional business management application on the Windows lab VM.
+
+- Added a command-line menu
+- Added customer listing
+- Added invoice listing
+- Added unpaid invoice total calculation using `Decimal`
+- Added invoice payment updates
+- Added temporary-file replacement and backup handling
+- Added daily report generation
+- Added basic CSV validation and readable error handling
+- Verified invoice updates persist after restarting the application
+- Restored the dataset to the original baseline after testing
+
+**Status:** Completed
+
 ## Safety and Scope
 
 This project is designed only for an isolated personal cybersecurity lab.
