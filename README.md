@@ -57,6 +57,21 @@ Completed the initial isolated lab environment using VMware Fusion on macOS.
 
 **Status:** Completed
 
+### Milestone M1 – Fictional Business Dataset
+
+Created the initial fictional business dataset on the Windows lab VM.
+
+- Created the required project folder structure
+- Built `setup_business.py` using `pathlib` and `csv`
+- Generated fictional customer data
+- Generated fictional invoice data
+- Created the daily operations document with a `LAB DATA ONLY` label
+- Verified invoice total: `855.50`
+- Verified unpaid total: `375.50`
+- Verified that rerunning the setup script does not overwrite existing files
+
+**Status:** Completed
+
 ## Safety and Scope
 
 This project is designed only for an isolated personal cybersecurity lab.
