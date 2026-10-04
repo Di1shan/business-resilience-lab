@@ -1,0 +1,9 @@
+{
+    "schema_version": 1,
+    "description": "Disposable synthetic exercise dataset for the business resilience lab.",
+    "allowed_files": [
+        "customers/customers.csv",
+        "invoices/invoices.csv",
+        "documents/daily_operations.txt"
+    ]
+}

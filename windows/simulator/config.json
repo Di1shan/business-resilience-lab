@@ -1,0 +1,8 @@
+{
+    "exercise_root": "exercise-data",
+    "marker_file": ".business_lab_marker",
+    "manifest_file": "manifest.json",
+    "max_files": 100,
+    "max_total_bytes": 10485760,
+    "max_run_seconds": 60
+}

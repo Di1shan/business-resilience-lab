@@ -1,0 +1,4 @@
+invoice_id,customer_id,amount,status
+INV001,C001,250.00,unpaid
+INV002,C002,480.00,paid
+INV003,C003,125.50,unpaid
