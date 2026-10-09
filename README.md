@@ -35,9 +35,16 @@ business-resilience-lab/
 │   ├── business-data/
 │   ├── exercise-data/
 │   ├── simulator/
+│   │   ├── main.py
+│   │   ├── config.json
+│   │   ├── discovery.py
+│   │   └── file_behaviour.py
 │   ├── monitoring/
 │   ├── recovery/
 │   ├── reports/
+│   │   ├── m4_inventory.json
+│   │   ├── m4_change_report.json
+│   │   └── m4_undo_record.json
 │   └── tests/
 ├── kali-server/
 ├── tests/
@@ -50,7 +57,8 @@ business-resilience-lab/
 │       ├── m0/
 │       ├── m1/
 │       ├── m2/
-│       └── m3/
+│       ├── m3/
+│       └── m4/
 └── README.md
 ```
 
@@ -144,22 +152,129 @@ evidence/sanitised/m3/
 
 **Status:** Completed
 
-## Next Milestone
-
 ### Milestone M4 – Scoped File Discovery and Controlled File Behaviour
 
-The next stage will work only with the disposable `exercise-data` dataset.
+Completed scoped file discovery and reversible file-behaviour testing using only the disposable `exercise-data` dataset.
+
+#### Scoped file discovery
+
+Created `discovery.py` to:
+
+- Read the allowed files from `manifest.json`
+- Check only manifested exercise files
+- Record each file's relative path, extension, and size
+- Identify missing manifested files
+- Identify unexpected CSV or TXT files
+- Create a structured inventory report
+- Keep absolute user paths out of the public report
+
+Generated report:
+
+```text
+windows/reports/m4_inventory.json
+```
+
+The final clean discovery run confirmed that the expected manifested files were present and no unexpected exercise files were found.
+
+#### Controlled file behaviour
+
+Created `file_behaviour.py` to perform a small set of controlled and reversible changes inside `exercise-data`.
+
+The test module:
+
+- Created a harmless M4 marker file
+- Modified one synthetic text file
+- Temporarily renamed the disposable `invoices.csv`
+- Calculated SHA-256 hashes before and after controlled changes
+- Recorded the exact operations in a change report
+- Created an undo record before performing the changes
+- Restored the renamed invoice file
+- Restored the original text-file contents
+- Removed the M4 marker
+- Verified restored files using their original SHA-256 hashes
+
+Generated records:
+
+```text
+windows/reports/m4_change_report.json
+windows/reports/m4_undo_record.json
+```
+
+Recovery verification confirmed:
+
+- Text file hash restored successfully
+- Invoice file hash restored successfully
+- Temporary renamed file removed
+- M4 marker removed
+- Original `invoices.csv` restored
+
+#### Business application exercise mode
+
+Updated `business_app.py` with a separate exercise mode.
+
+Normal mode:
+
+```powershell
+python business_app.py
+```
+
+uses:
+
+```text
+business-data/
+```
+
+Exercise mode:
+
+```powershell
+python business_app.py --exercise
+```
+
+uses:
+
+```text
+exercise-data/
+```
+
+This allowed the controlled file-behaviour test to demonstrate a predictable business interruption without modifying the normal business dataset.
+
+During the M4 test:
+
+- The exercise application worked normally before the controlled change
+- The disposable `invoices.csv` was temporarily unavailable
+- The application displayed a clear missing-file error
+- The controlled changes were undone
+- The exercise application worked normally again after recovery
+- The normal `business-data` dataset continued to work unchanged
+
+Sanitised evidence is stored under:
+
+```text
+evidence/sanitised/m4/
+```
+
+**Status:** Completed
+
+## Next Milestone
+
+### Milestone M5 – Kali Receiver and Windows-to-Kali JSON Communication
+
+The next stage will add structured communication between the Windows simulator and the Kali VM.
 
 Planned work includes:
 
-- Enumerating only files listed in the manifest
-- Recording relative path, extension, and file size
-- Creating an inventory report
-- Comparing discovered files with the expected manifest
-- Making controlled and reversible changes to selected synthetic files
-- Recording before and after hashes
-- Maintaining an undo record
-- Confirming the original `business-data` dataset remains unchanged
+- Creating a Kali-side JSON event receiver
+- Defining a fixed event-message schema
+- Sending simulator event metadata from Windows
+- Validating received JSON
+- Rejecting malformed or oversized requests
+- Adding finite timeouts and bounded retries
+- Preventing duplicate event counting
+- Testing receiver unavailability
+- Comparing received events with Wireshark traffic
+- Recording sanitised evidence for a complete communication run
+
+Only synthetic event metadata will be sent. The receiver will not execute remote commands or arbitrary code.
 
 **Status:** Not Started
 
@@ -173,6 +288,8 @@ This project is designed only for an isolated personal cybersecurity lab.
 - The simulator operates only on the disposable `exercise-data` dataset
 - The normal `business-data` dataset remains separate
 - Paths are validated before simulator operations
+- Controlled file changes are reversible and recorded
+- Recovery is verified using file hashes
 - No credential theft, stealth, security-tool interference, or arbitrary remote command execution is implemented
 - VM images, snapshots, raw private logs, credentials, keys, and tokens will not be committed to this repository
 
