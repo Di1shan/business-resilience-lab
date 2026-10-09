@@ -1,0 +1,24 @@
+{
+    "run_id": "df48231b-2919-4b54-861d-6383df1c4c2d",
+    "created_utc": "2026-10-10T06:01:46.722124+00:00",
+    "state": "controlled_changes_applied",
+    "operations": [
+        {
+            "operation": "create_marker",
+            "path": "m4-controlled-change.marker"
+        },
+        {
+            "operation": "modify_text_file",
+            "path": "documents/daily_operations.txt",
+            "before_sha256": "29bef36c31b518307be9c7d99f833867f03adf0bb41694a4af3941c58f90adf4",
+            "after_sha256": "d5fe87da80153ec97ede70aa90061de130cf924103faef2c9c9139136979563c"
+        },
+        {
+            "operation": "rename_file",
+            "original_path": "invoices/invoices.csv",
+            "temporary_path": "invoices/invoices.m4-test",
+            "before_sha256": "d8b8744ace0a9d4d1eb636f248abd5b78220ff58bceab25930570351a44c9742",
+            "after_sha256": "d8b8744ace0a9d4d1eb636f248abd5b78220ff58bceab25930570351a44c9742"
+        }
+    ]
+}

@@ -1,0 +1,30 @@
+{
+    "generated_utc": "2026-10-10T05:54:28.251039+00:00",
+    "exercise_root": "exercise-data",
+    "inventory": [
+        {
+            "path": "customers/customers.csv",
+            "extension": ".csv",
+            "size_bytes": 191,
+            "status": "present"
+        },
+        {
+            "path": "invoices/invoices.csv",
+            "extension": ".csv",
+            "size_bytes": 117,
+            "status": "present"
+        },
+        {
+            "path": "documents/daily_operations.txt",
+            "extension": ".txt",
+            "size_bytes": 479,
+            "status": "present"
+        }
+    ],
+    "summary": {
+        "manifest_entries": 3,
+        "present_files": 3,
+        "missing_files": [],
+        "unexpected_files": []
+    }
+}

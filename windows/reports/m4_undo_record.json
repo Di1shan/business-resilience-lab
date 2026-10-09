@@ -1,0 +1,21 @@
+{
+    "run_id": "df48231b-2919-4b54-861d-6383df1c4c2d",
+    "created_utc": "2026-10-10T06:01:46.718596+00:00",
+    "text_file": {
+        "path": "documents/daily_operations.txt",
+        "original_content": "LAB DATA ONLY\n\nFictional Business Daily Operations\n\nThe business maintains customer and invoice records for training purposes.\n\nDaily activities include:\n- Reviewing customer information\n- Checking invoice records\n- Identifying unpaid invoices\n- Updating invoice payment status\n- Generating daily operational reports\n\nAll data in this project is fictional and used only inside the isolated cybersecurity lab.\n\nnotepad business-data\\documents\\daily_operations.txt\n",
+        "original_sha256": "29bef36c31b518307be9c7d99f833867f03adf0bb41694a4af3941c58f90adf4"
+    },
+    "renamed_file": {
+        "original_path": "invoices/invoices.csv",
+        "temporary_path": "invoices/invoices.m4-test",
+        "original_sha256": "d8b8744ace0a9d4d1eb636f248abd5b78220ff58bceab25930570351a44c9742"
+    },
+    "marker_file": "m4-controlled-change.marker",
+    "state": "restored",
+    "restored_utc": "2026-10-10T06:04:16.627400+00:00",
+    "verification": {
+        "text_hash_restored": true,
+        "invoice_hash_restored": true
+    }
+}
