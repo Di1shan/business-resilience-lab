@@ -38,7 +38,8 @@ business-resilience-lab/
 │   │   ├── main.py
 │   │   ├── config.json
 │   │   ├── discovery.py
-│   │   └── file_behaviour.py
+│   │   ├── file_behaviour.py
+│   │   └── sender.py
 │   ├── monitoring/
 │   ├── recovery/
 │   ├── reports/
@@ -47,6 +48,7 @@ business-resilience-lab/
 │   │   └── m4_undo_record.json
 │   └── tests/
 ├── kali-server/
+│   └── server.py
 ├── tests/
 │   └── synthetic-fixtures/
 ├── docs/
@@ -58,7 +60,8 @@ business-resilience-lab/
 │       ├── m1/
 │       ├── m2/
 │       ├── m3/
-│       └── m4/
+│       ├── m4/
+│       └── m5/
 └── README.md
 ```
 
@@ -255,26 +258,117 @@ evidence/sanitised/m4/
 
 **Status:** Completed
 
-## Next Milestone
-
 ### Milestone M5 – Kali Receiver and Windows-to-Kali JSON Communication
 
-The next stage will add structured communication between the Windows simulator and the Kali VM.
+Completed structured event communication between the Windows simulator environment and the Kali VM.
+
+#### Kali event receiver
+
+Created:
+
+```text
+kali-server/server.py
+```
+
+The receiver:
+
+- Listens on TCP port `8001`
+- Accepts `POST /events`
+- Validates incoming JSON
+- Requires a fixed message schema
+- Rejects malformed JSON
+- Rejects oversized requests
+- Rejects events with missing required fields
+- Rejects unsupported state values
+- Prevents duplicate event recording using `run_id` and `sequence`
+- Stores accepted events in JSON Lines format
+- Adds a receiver-side UTC timestamp
+- Never evaluates message content as code
+
+The M5 event schema contains:
+
+```text
+schema_version
+run_id
+sequence
+module
+state
+timestamp_utc
+summary
+```
+
+#### Windows event sender
+
+Created:
+
+```text
+windows/simulator/sender.py
+```
+
+The sender:
+
+- Sends JSON events to the Kali receiver
+- Uses a finite network timeout
+- Uses a maximum of three retry attempts
+- Stops cleanly if the receiver is unavailable
+- Generates unique run IDs
+- Assigns sequence numbers to events
+- Includes a single-event communication test
+- Includes a duplicate-event test
+- Includes a finite heartbeat test
+
+The heartbeat test sends five synthetic status messages at a fixed interval and then stops automatically.
+
+#### M5 validation and evidence
+
+The following tests were completed:
+
+- Single valid event accepted
+- Duplicate event detected without creating a second log entry
+- Five-message heartbeat run accepted
+- Malformed JSON rejected
+- Missing required fields rejected
+- Oversized request rejected
+- Receiver-unavailable condition handled with bounded retries
+- Wireshark capture confirmed Windows-to-Kali traffic on port `8001`
+- Receiver event log matched the expected test activity
+
+Raw private receiver logs are not stored directly in the repository. A sanitised sample is stored under:
+
+```text
+evidence/sanitised/m5/sample-events.jsonl
+```
+
+Sanitised screenshots and test evidence are stored under:
+
+```text
+evidence/sanitised/m5/
+```
+
+**Status:** Completed
+
+## Next Milestone
+
+### Milestone M6 – Controlled Scheduled Execution
+
+The next stage will demonstrate transparent and manually configured scheduled execution using a harmless status action.
 
 Planned work includes:
 
-- Creating a Kali-side JSON event receiver
-- Defining a fixed event-message schema
-- Sending simulator event metadata from Windows
-- Validating received JSON
-- Rejecting malformed or oversized requests
-- Adding finite timeouts and bounded retries
-- Preventing duplicate event counting
-- Testing receiver unavailability
-- Comparing received events with Wireshark traffic
-- Recording sanitised evidence for a complete communication run
+- Creating a small `scheduled_demo.py`
+- Recording the scheduled execution time in a dedicated lab log
+- Testing the script manually first
+- Creating a clearly named Windows Task Scheduler entry
+- Running the task using the normal lab account
+- Avoiding highest-privilege execution
+- Recording the task configuration and actual run time
+- Verifying the expected log entry
+- Disabling the scheduled task
+- Confirming no further execution occurs
+- Deleting only the test task after verification
+- Saving sanitised evidence of setup, execution, disabling, and cleanup
 
-Only synthetic event metadata will be sent. The receiver will not execute remote commands or arbitrary code.
+The scheduled demonstration will remain separate from controlled impact modules and will not use hidden persistence.
 
 **Status:** Not Started
 
@@ -290,6 +384,9 @@ This project is designed only for an isolated personal cybersecurity lab.
 - Paths are validated before simulator operations
 - Controlled file changes are reversible and recorded
 - Recovery is verified using file hashes
+- Network communication sends only synthetic event metadata
+- The Kali receiver does not execute arbitrary commands or message content
+- Network retries and heartbeat activity are finite and bounded
 - No credential theft, stealth, security-tool interference, or arbitrary remote command execution is implemented
 - VM images, snapshots, raw private logs, credentials, keys, and tokens will not be committed to this repository
 
